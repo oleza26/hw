@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="../tests/tests.vcxproj" Id="6263881e-ff71-4917-9a97-5c1137298a6b">
+    <BuildDependency Project="sorting.vcxproj" />
+  </Project>
+  <Project Path="sorting.vcxproj" Id="d44225c8-937e-4fb3-9467-725b755f47b2" />
+</Solution>

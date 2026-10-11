@@ -156,22 +156,28 @@
     <ClInclude Include="bubble_sort.h" />
     <ClInclude Include="exchange_sort.h" />
     <ClInclude Include="insertion_sort.h" />
+    <ClInclude Include="natural_merge_sort.h" />
+    <ClInclude Include="one_phase_merge_sort.h" />
     <ClInclude Include="optimized_bubble_sort.h" />
     <ClInclude Include="quick_sort.h" />
     <ClInclude Include="selection_sort.h" />
     <ClInclude Include="shaker_sort.h" />
     <ClInclude Include="shell_sort.h" />
+    <ClInclude Include="two_phase_merge_sort.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="binary_insertion_sort.cpp" />
     <ClCompile Include="bubble_sort.cpp" />
     <ClCompile Include="exchange_sort.cpp" />
     <ClCompile Include="insertion_sort.cpp" />
+    <ClCompile Include="natural_merge_sort.cpp" />
+    <ClCompile Include="one_phase_merge_sort.cpp" />
     <ClCompile Include="optimized_bubble_sort.cpp" />
     <ClCompile Include="quick_sort.cpp" />
     <ClCompile Include="selection_sort.cpp" />
     <ClCompile Include="shaker_sort.cpp" />
     <ClCompile Include="shell_sort.cpp" />
+    <ClCompile Include="two_phase_merge_sort.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

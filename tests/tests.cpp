@@ -427,3 +427,53 @@ TEST_CASE("External Sorts - Mixed Values", "[external_sort][mixed]") {
     std::remove(filename_one.c_str());
     std::remove(filename_nat.c_str());
 }
+
+TEST_CASE("Internal Sorts - Double Values", "[internal_sort][double]") {
+    std::vector<double> mixed_double = { 3.14, -1.5, 0.0, 2.71, -9.99, 4.2 };
+    std::vector<double> expected_double = { -9.99, -1.5, 0.0, 2.71, 3.14, 4.2 };
+
+    std::vector<double> test_vec;
+
+    test_vec = mixed_double; bubble_sort(test_vec); REQUIRE(test_vec == expected_double);
+
+    test_vec = mixed_double; optimized_bubble_sort(test_vec); REQUIRE(test_vec == expected_double);
+
+    test_vec = mixed_double; insertion_sort(test_vec); REQUIRE(test_vec == expected_double);
+
+    test_vec = mixed_double; binary_insertion_sort(test_vec); REQUIRE(test_vec == expected_double);
+
+    test_vec = mixed_double; selection_sort(test_vec); REQUIRE(test_vec == expected_double);
+
+    test_vec = mixed_double; exchange_sort(test_vec); REQUIRE(test_vec == expected_double);
+
+    test_vec = mixed_double; shaker_sort(test_vec); REQUIRE(test_vec == expected_double);
+
+    test_vec = mixed_double; shell_sort(test_vec); REQUIRE(test_vec == expected_double);
+
+    test_vec = mixed_double; quick_sort(test_vec); REQUIRE(test_vec == expected_double);
+}
+
+TEST_CASE("External Sorts - Double Values", "[external_sort][double]") {
+    std::vector<double> mixed_double = { 3.14, -1.5, 0.0, 2.71, -9.99, 4.2 };
+    std::vector<double> expected_double = { -9.99, -1.5, 0.0, 2.71, 3.14, 4.2 };
+
+    std::string filename_two = "test_double_two.bin";
+    std::string filename_one = "test_double_one.bin";
+    std::string filename_nat = "test_double_nat.bin";
+
+    write_to_file(filename_two, mixed_double);
+    write_to_file(filename_one, mixed_double);
+    write_to_file(filename_nat, mixed_double);
+
+    two_phase_merge_sort<double>(filename_two, 2);
+    one_phase_merge_sort<double>(filename_one);
+    natural_merge_sort<double>(filename_nat);
+
+    REQUIRE(read_from_file<double>(filename_two) == expected_double);
+    REQUIRE(read_from_file<double>(filename_one) == expected_double);
+    REQUIRE(read_from_file<double>(filename_nat) == expected_double);
+
+    std::remove(filename_two.c_str());
+    std::remove(filename_one.c_str());
+    std::remove(filename_nat.c_str());
+}

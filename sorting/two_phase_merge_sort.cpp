@@ -5,7 +5,7 @@
 #include <cstdio>
 
 template <typename T>
-void two_phase_simple_merge_sort(const std::string& inputFile, size_t ramBlockSize) {
+void two_phase_merge_sort(const std::string& inputFile, size_t ramBlockSize) {
     std::string temp1 = "temp1.bin";
     std::string temp2 = "temp2.bin";
 
@@ -87,9 +87,16 @@ void two_phase_simple_merge_sort(const std::string& inputFile, size_t ramBlockSi
         k *= 2;
     }
 
-    if (src == temp2) { std::remove(inputFile.c_str()); std::rename(temp2.c_str(), inputFile.c_str()); }
-    std::remove(temp1.c_str());
+    if (src == temp1) {
+        std::remove(inputFile.c_str());
+        std::rename(temp1.c_str(), inputFile.c_str());
+        std::remove(temp2.c_str());
+    }
+    else {
+        std::remove(inputFile.c_str());
+        std::rename(temp2.c_str(), inputFile.c_str());
+        std::remove(temp1.c_str());
+    }
 }
-
-template void two_phase_simple_merge_sort<int>(const std::string&, size_t);
-template void two_phase_simple_merge_sort<double>(const std::string&, size_t);
+template void two_phase_merge_sort<int>(const std::string&, size_t);
+template void two_phase_merge_sort<double>(const std::string&, size_t);

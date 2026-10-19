@@ -6,18 +6,11 @@
 #include <cstdio>
 
 template <typename T>
-void natural_merge_sort(const std::string& inputFile);
-
-// ==============================================================================
-// Реализация шаблонной функции
-// ==============================================================================
-template <typename T>
 void natural_merge_sort(const std::string& inputFile) {
     std::string temp1 = "temp1.bin";
     std::string temp2 = "temp2.bin";
 
     while (true) {
-        // === ЭТАП 1: РАСПРЕДЕЛЕНИЕ ЕСТЕСТВЕННЫХ СЕРИЙ ===
         std::ifstream inSrc(inputFile, std::ios::binary);
         std::ofstream out1(temp1, std::ios::binary);
         std::ofstream out2(temp2, std::ios::binary);
@@ -60,7 +53,6 @@ void natural_merge_sort(const std::string& inputFile) {
             break;
         }
 
-        // === ЭТАП 2: СЛИЯНИЕ ЕСТЕСТВЕННЫХ СЕРИЙ ===
         std::ifstream in1(temp1, std::ios::binary);
         std::ifstream in2(temp2, std::ios::binary);
         std::ofstream outSrc(inputFile, std::ios::binary);
@@ -69,7 +61,6 @@ void natural_merge_sort(const std::string& inputFile) {
             std::vector<T> run1, run2;
             T val;
 
-            // Читаем серию из temp1
             if (in1.read(reinterpret_cast<char*>(&val), sizeof(T))) {
                 run1.push_back(val);
                 while (in1.read(reinterpret_cast<char*>(&val), sizeof(T))) {
@@ -77,14 +68,12 @@ void natural_merge_sort(const std::string& inputFile) {
                         run1.push_back(val);
                     }
                     else {
-                        // ИСПРАВЛЕНО: явное приведение к знаковому типу std::streamoff
                         in1.seekg(-static_cast<std::streamoff>(sizeof(T)), std::ios::cur);
                         break;
                     }
                 }
             }
 
-            // Читаем серию из temp2
             if (in2.read(reinterpret_cast<char*>(&val), sizeof(T))) {
                 run2.push_back(val);
                 while (in2.read(reinterpret_cast<char*>(&val), sizeof(T))) {
@@ -92,7 +81,6 @@ void natural_merge_sort(const std::string& inputFile) {
                         run2.push_back(val);
                     }
                     else {
-                        // ИСПРАВЛЕНО: явное приведение к знаковому типу std::streamoff
                         in2.seekg(-static_cast<std::streamoff>(sizeof(T)), std::ios::cur);
                         break;
                     }
@@ -101,7 +89,6 @@ void natural_merge_sort(const std::string& inputFile) {
 
             if (run1.empty() && run2.empty()) break;
 
-            // Встроенное слияние
             std::vector<T> merged;
             merged.reserve(run1.size() + run2.size());
             size_t i = 0, j = 0;
@@ -118,3 +105,6 @@ void natural_merge_sort(const std::string& inputFile) {
         in1.close(); in2.close(); outSrc.close();
     }
 }
+
+template void natural_merge_sort<int>(const std::string&);
+template void natural_merge_sort<double>(const std::string&);

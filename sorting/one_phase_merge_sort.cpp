@@ -5,7 +5,7 @@
 #include <cstdio>
 
 template <typename T>
-void onePhaseSimpleMergeSort(const std::string& inputFile) {
+void one_phase_merge_sort(const std::string& inputFile) {
     std::string t1 = "t1.bin", t2 = "t2.bin", t3 = "t3.bin", t4 = "t4.bin";
 
     size_t totalElements = 0;
@@ -82,18 +82,22 @@ void onePhaseSimpleMergeSort(const std::string& inputFile) {
         k *= 2;
     }
 
-    std::string finalFile = (src1 == t1 || src1 == t2) ? src1 : src2;
-    std::ifstream check1(src1, std::ios::binary | std::ios::ate);
-    std::ifstream check2(src2, std::ios::binary | std::ios::ate);
-    if (check1 && (check1.tellg() / sizeof(T)) == totalElements) finalFile = src1;
-    else finalFile = src2;
+    std::string finalFile = dst1;
+    {
+        std::ifstream check1(dst1, std::ios::binary | std::ios::ate);
+        std::ifstream check2(dst2, std::ios::binary | std::ios::ate);
+        if (check1 && (check1.tellg() / sizeof(T)) == totalElements) finalFile = dst1;
+        else if (check2 && (check2.tellg() / sizeof(T)) == totalElements) finalFile = dst2;
+    }
 
     std::remove(inputFile.c_str());
     std::rename(finalFile.c_str(), inputFile.c_str());
 
     std::string temps[4] = { t1, t2, t3, t4 };
-    for (int i = 0; i < 4; ++i) if (temps[i] != inputFile) std::remove(temps[i].c_str());
+    for (int i = 0; i < 4; ++i) {
+        if (temps[i] != inputFile) std::remove(temps[i].c_str());
+    }
 }
 
-template void onePhaseSimpleMergeSort<int>(const std::string&);
-template void onePhaseSimpleMergeSort<double>(const std::string&);
+template void one_phase_merge_sort<int>(const std::string&);
+template void one_phase_merge_sort<double>(const std::string&);
